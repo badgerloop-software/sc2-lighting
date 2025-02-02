@@ -1,0 +1,2 @@
+# sc2-lighting
+This repo has the STM32_CAN library directly in the `/lib` because PlatformIO doesn't have the latest version of the library available (which has the configuration necessary for the STM32F042F6, the MCU of this board). 
