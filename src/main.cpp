@@ -3,14 +3,12 @@
 #include "lightingCAN.h"
 
 
-LightingCAN Can1( CAN1, DEF );
+LightingCAN Can1(CAN1, DEF );
 
 void setup() {
   Serial.begin(115200); // TX = PA2, RX = PA3
-  pinMode(LED, OUTPUT);
 }
 
 void loop() {
   Can1.runQueue(1000);
-  Serial.println("Blinky!");
 }
