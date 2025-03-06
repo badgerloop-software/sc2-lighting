@@ -3,10 +3,11 @@
 #include "lightingCAN.h"
 
 
-LightingCAN Can1( CAN1, DEF );
+LightingCAN Can1(CAN1, DEF );
 
 void setup() {
   Serial.begin(115200); // TX = PA2, RX = PA3
+  int LED = 0; //temp
   pinMode(LED, OUTPUT);
 }
 
