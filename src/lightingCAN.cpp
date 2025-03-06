@@ -65,12 +65,10 @@ void LightingCAN::readHandler(CAN_message_t msg) {
     uint8_t* data = msg.buf;
     switch (msg.id) {
         case LED_ID_1:
-            // digitalWrite(PA0, data[0]);
             bitVal = (LED_ID_1 >> BIT_OFF) & 1;
             setLED(PA0, bitVal, BLINK1);
             break;
         case LED_ID_2:
-            // digitalWrite(PA1, data[0]);
             bitVal = (LED_ID_2 >> BIT_OFF) & 1;
             setLED(PA1, bitVal, BLINK2);
             break;
