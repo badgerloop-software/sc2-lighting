@@ -8,6 +8,7 @@ class LightingCAN : public CANManager {
     public:
         LightingCAN(CAN_TypeDef* canPort, CAN_PINS pins, int frequency = DEFAULT_CAN_FREQ);
         void readHandler(CAN_message_t msg);
+        void send();
 };
 
 #endif

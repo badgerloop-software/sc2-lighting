@@ -16,8 +16,8 @@
 #if BOARD == L_FRONT_LIGHT
 #define LED_ID_1 0x300
 #define BIT_OFF 1
-#define BLINK1 1
-#define LED_ID_2 0x0  // TODO: replace with headlight ID
+#define BLINK1 0
+#define LED_ID_2 0x400 // TODO: replace with headlight ID
 #define BLINK2 0
 #elif BOARD == R_FRONT_LIGHT
 #define LED_ID_1 0x300
@@ -61,15 +61,26 @@ LightingCAN::LightingCAN(CAN_TypeDef* canPort, CAN_PINS pins, int frequency) : C
     pinMode(PA1, OUTPUT);
 };
 
+void LightingCAN::send() {
+    uint8_t abc = 12;
+    bool ret = this->sendMessage(0x100, (void*)&abc, sizeof(uint8_t));
+    // if (!ret) {
+    //     digitalWrite(PA0, LOW);
+    //     this->reset();
+    // } else {
+    //     digitalWrite(PA0, HIGH);
+    // }
+}
+
 void LightingCAN::readHandler(CAN_message_t msg) {
-    uint8_t* data = msg.buf;
+    uint8_t data = msg.buf[0];
     switch (msg.id) {
         case LED_ID_1:
-            bitVal = (LED_ID_1 >> BIT_OFF) & 1;
+            bitVal = (data >> BIT_OFF) & 1;
             setLED(PA0, bitVal, BLINK1);
             break;
         case LED_ID_2:
-            bitVal = (LED_ID_2 >> BIT_OFF) & 1;
+            bitVal = (data >> BIT_OFF) & 1;
             setLED(PA1, bitVal, BLINK2);
             break;
         default:
