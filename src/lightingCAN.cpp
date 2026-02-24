@@ -26,8 +26,8 @@ void LightingCAN::readHandler(CAN_message_t msg) {
             leds[0].on = msg.buf[0] != 0 || msg.buf[2] != 0 || msg.buf[4] != 0 || msg.buf[5] != 0;
         #else
             leds[0].on = (data >> BIT_OFF1) & 1;
-            setLED(0);
         #endif
+        setLED(0);
     }
     if (msg.id == LED_ID_2) {
         leds[1].on = (data >> BIT_OFF2) & 1;
