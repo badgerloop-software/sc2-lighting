@@ -21,15 +21,48 @@ bool LightingCAN::send() {
 
 void LightingCAN::readHandler(CAN_message_t msg) {
     uint8_t data = msg.buf[0];
+
+    // Extra handling for brake light if it also needs to blink, can comment out for normal function
+    if (BOARD == 7) {
+        leds[0].blinks = (msg.id == 0x300);
+        if (msg.id == 0x300) {
+            leds[0].on = (data >> 2) & 1;
+            setLED(0);
+            return;
+        }
+        else if (msg.id == LED_ID_1) {
+            leds[0].on = ((data >> BIT_OFF1) & 1) | leds[0].on;
+            setLED(0);
+            return;
+        }
+    }
+    else if (BOARD == 5) {
+        leds[0].blinks = (msg.id == 0x300);
+        if (msg.id == 0x300) {
+            leds[0].on = (data >> 1) & 1;
+            setLED(0);
+            return;
+        }
+        else if (msg.id == LED_ID_1) {
+            leds[0].on = ((data >> BIT_OFF1) & 1) | leds[0].on;
+            setLED(0);
+            return;
+        }
+    }
+    ////////////////////////////////////////////////////////////////////////
+
+
     if (msg.id == LED_ID_1) {
+        leds[0].on = (data >> BIT_OFF1) & 1;
+        #ifdef PLATE
+            leds[0].on = 1;
+        #endif
         #ifdef BPS_FAULT
             leds[0].on = msg.buf[0] != 0 || msg.buf[2] != 0 || msg.buf[4] != 0 || msg.buf[5] != 0;
-        #else
-            leds[0].on = (data >> BIT_OFF1) & 1;
         #endif
         setLED(0);
     }
-    if (msg.id == LED_ID_2) {
+    else if (msg.id == LED_ID_2) {
         leds[1].on = (data >> BIT_OFF2) & 1;
         setLED(1);
     }
