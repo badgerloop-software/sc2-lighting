@@ -40,45 +40,45 @@
 #endif
 
 #ifdef LEFT_BLINK
-    #define LED_ID_2 0x300
-    #define BIT_OFF2 1
-    #define BLINK2 true
-#endif
-
-#ifdef RIGHT_BLINK
-    #define LED_ID_2 0x300
-    #define BIT_OFF2 2
-    #define BLINK2 true
-#endif
-
-#ifdef BPS_FAULT
-    #define LED_ID_1 0x100
-    #define BIT_OFF1 0
+    #define LED_ID_1 0x300
+    #define BIT_OFF1 1
     #define BLINK1 true
 #endif
 
+#ifdef RIGHT_BLINK
+    #define LED_ID_1 0x300
+    #define BIT_OFF1 2
+    #define BLINK1 true
+#endif
+
+#ifdef BPS_FAULT
+    #define LED_ID_2 0x100
+    #define BIT_OFF2 0
+    #define BLINK2 true
+#endif
+
 #ifdef BRAKELIGHT
-    #define LED_ID_1 0x207
-    #define BIT_OFF1 4
-    #define BLINK1 false
+    #define LED_ID_2 0x207
+    #define BIT_OFF2 4
+    #define BLINK2 false
 #endif
 
 #ifdef HEADLIGHT
-    #define LED_ID_1 0x300
-    #define BIT_OFF1 0
-    #define BLINK1 0
+    #define LED_ID_2 0x300
+    #define BIT_OFF2 0
+    #define BLINK2 0
 #endif
 
 #ifdef PLATE
-    #define LED_ID_1 0x300
-    #define BIT_OFF1 3
-    #define BLINK1 0
+    #define LED_ID_2 0x300
+    #define BIT_OFF2 3
+    #define BLINK2 0
 #endif
 
 #ifdef REVERSE
-    #define LED_ID_2 0x207
-    #define BIT_OFF2 0
-    #define BLINK2 0
+    #define LED_ID_1 0x207
+    #define BIT_OFF1 0
+    #define BLINK1 0
 #endif
 
 
@@ -95,6 +95,7 @@ class LightingCAN : public CANManager {
     public:
         LightingCAN(CAN_TypeDef* canPort, CAN_PINS pins, int frequency = DEFAULT_CAN_FREQ);
         void readHandler(CAN_message_t msg);
+    void updateOutputs();
         bool send();
 };
 
