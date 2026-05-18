@@ -12,9 +12,11 @@
 #define R_REAR_PLATE 6
 #define R_REAR_REVERSE 7
 
-#define BOARD 7
+#define BOARD 2
 
 #define BLINK_DELAY 400
+#define HAZARD_ID 0x304
+#define HAZARD_BIT 0
 
 #if BOARD == L_FRONT_LIGHT
     #define LEFT_BLINK

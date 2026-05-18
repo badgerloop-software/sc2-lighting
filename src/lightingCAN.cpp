@@ -5,11 +5,15 @@ volatile LED leds[2] = {
     {false, false, BLINK2, PA1}
 };
 
-static volatile bool sharedBlinkRequest = false;
-static volatile bool sharedBrakeRequest = false;
+#if defined(LEFT_BLINK) || defined(RIGHT_BLINK)
+static volatile bool blinkRequest = false;
+static volatile bool hazardRequest = false;
+#endif
 
 void setLED(uint8_t i);
-void applySharedRearLight();
+#if defined(LEFT_BLINK) || defined(RIGHT_BLINK)
+void applyBlinkOutput();
+#endif
 
 LightingCAN::LightingCAN(CAN_TypeDef* canPort, CAN_PINS pins, int frequency) : CANManager(canPort, pins, frequency) {
 
@@ -18,9 +22,6 @@ LightingCAN::LightingCAN(CAN_TypeDef* canPort, CAN_PINS pins, int frequency) : C
 bool LightingCAN::send() {
     // send function is mostly for testing that CAN communication works
     // it should NOT be used in the final product
-    uint8_t abc = 12;
-    bool ret = this->sendMessage(0x700, (void*)&abc, sizeof(uint8_t));
-    return ret;
 }
 
 void LightingCAN::updateOutputs() {
@@ -34,33 +35,19 @@ void LightingCAN::updateOutputs() {
 void LightingCAN::readHandler(CAN_message_t msg) {
     uint8_t data = msg.buf[0];
 
-    // Boards 5 and 7 combine blink and brake requests onto one physical LED.
-    if (BOARD == 7) {
-        if (msg.id == 0x300) {
-            sharedBlinkRequest = (data >> 2) & 1;
-            applySharedRearLight();
-            return;
-        }
-        else if (msg.id == LED_ID_1) {
-            sharedBrakeRequest = (data >> BIT_OFF1) & 1;
-            applySharedRearLight();
-            return;
-        }
+#if defined(LEFT_BLINK) || defined(RIGHT_BLINK)
+    if (msg.id == HAZARD_ID) {
+        hazardRequest = (data >> HAZARD_BIT) & 1;
+        applyBlinkOutput();
+        return;
     }
-    else if (BOARD == 5) {
-        if (msg.id == 0x300) {
-            sharedBlinkRequest = (data >> 1) & 1;
-            applySharedRearLight();
-            return;
-        }
-        else if (msg.id == LED_ID_1) {
-            sharedBrakeRequest = (data >> BIT_OFF1) & 1;
-            applySharedRearLight();
-            return;
-        }
-    }
-    ////////////////////////////////////////////////////////////////////////
 
+    if (msg.id == LED_ID_1) {
+        blinkRequest = (data >> BIT_OFF1) & 1;
+        applyBlinkOutput();
+        return;
+    }
+#endif
 
     if (msg.id == LED_ID_1) {
         leds[0].on = (data >> BIT_OFF1) & 1;
@@ -92,9 +79,9 @@ void setLED(uint8_t i) {
     }
 }
 
-void applySharedRearLight() {
-    // Blink has priority for boards 5/7 when both requests are active.
-    leds[0].on = sharedBlinkRequest || sharedBrakeRequest;
-    leds[0].blinks = sharedBlinkRequest;
+#if defined(LEFT_BLINK) || defined(RIGHT_BLINK)
+void applyBlinkOutput() {
+    leds[0].on = hazardRequest || blinkRequest;
     setLED(0);
 }
+#endif
