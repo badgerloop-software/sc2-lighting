@@ -1,0 +1,41 @@
+{
+  "build": {
+    "cpu": "cortex-m4",
+    "extra_flags": "-DSTM32F373xC -DARDUINO_GENERIC_F373C8TX",
+    "f_cpu": "72000000L",
+    "mcu": "stm32f373c8t6",
+    "product_line": "STM32F373xC",
+    "variant": "STM32F3xx/F373C(8-B-C)T"
+  },
+  "debug": {
+    "default_tools": [
+      "stlink"
+    ],
+    "jlink_device": "STM32F373C8",
+    "onboard_tools": [
+      "stlink"
+    ],
+    "openocd_target": "stm32f3x",
+    "svd_path": "STM32F373.svd"
+  },
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube"
+  ],
+  "name": "Generic STM32F373C8 (64K FLASH, 24K RAM)",
+  "upload": {
+    "maximum_ram_size": 24576,
+    "maximum_size": 65536,
+    "protocol": "stlink",
+    "protocols": [
+      "jlink",
+      "cmsis-dap",
+      "stlink",
+      "blackmagic",
+      "dfu"
+    ]
+  },
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f373c8.html",
+  "vendor": "ST"
+}
