@@ -7,8 +7,12 @@ LightingCAN Can1(CAN1, DEF);
 void setup() {
   pinMode(PA0, OUTPUT);
   pinMode(PA1, OUTPUT);
+#ifdef PLATE_ALWAYS_ON
+  digitalWrite(PA1, HIGH);
+#endif
 }
 
 void loop() {
-  Can1.runQueue(1000);
+  Can1.runQueue(1);
+  Can1.updateOutputs();
 }
