@@ -36,7 +36,7 @@ void LightingCAN::readHandler(CAN_message_t msg) {
 
 #ifdef REVERSE
     if (msg.id == LED_ID_1) {
-        leds[0].on = !((data >> BIT_OFF1) & 1);
+        leds[0].on = (data >> BIT_OFF1) & 1;
         setLED(0);
     }
 #endif

@@ -12,7 +12,7 @@ Lighting controller firmware for STM32F042 boards. Set `#define BOARD` in `inclu
 | 4 | Right side | Right blink | Brake | 0x300 bit 2 / 0x207 bit 5 |
 | 5 | Left rear | Left blink | Brake | 0x300 bit 1 / 0x207 bit 5 |
 | 6 | Right rear plate | Right blink | Plate (always on) | 0x300 bit 2 / GPIO |
-| 7 | Rear reverse | Reverse | Brake | 0x207 bit 0 (inverted) / bit 5 |
+| 7 | Rear reverse | Reverse | Brake | 0x207 bit 0 / bit 5 |
 
 ## Blink sync
 
