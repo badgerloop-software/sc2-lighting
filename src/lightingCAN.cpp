@@ -43,7 +43,7 @@ void LightingCAN::readHandler(CAN_message_t msg) {
 
 #if defined(BPS_FAULT)
     if (msg.id == LED_ID_2) {
-        leds[1].on = msg.buf[0] != 0 || msg.buf[2] != 0 || msg.buf[4] != 0 || msg.buf[5] != 0;
+        leds[1].on = (data >> BIT_OFF2) & 1;
         setLED(1);
     }
 #endif

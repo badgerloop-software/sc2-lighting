@@ -52,7 +52,8 @@
 #endif
 
 #ifdef BPS_FAULT
-    #define LED_ID_2 0x100
+    #define LED_ID_2 0x103
+    #define BIT_OFF2 0
     #define BLINK2 true
 #endif
 
