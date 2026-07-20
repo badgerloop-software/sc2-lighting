@@ -12,11 +12,17 @@
 #define R_REAR_PLATE 6
 #define R_REAR_REVERSE 7
 
-#define BOARD 2
+#ifndef BOARD
+#define BOARD L_SIDE_LIGHT
+#endif
 
 #define BLINK_DELAY 400
 #define HAZARD_ID 0x304
 #define HAZARD_BIT 0
+
+// Each board drives two lights (PA0, PA1). Most enable signals come from the
+// steering wheel (0x300 / 0x304). Board 3 (L_SIDE_LIGHT) wires LED 1 to BMS
+// battery protection on 0x505 instead.
 
 #if BOARD == L_FRONT_LIGHT
     #define LEFT_BLINK
@@ -26,7 +32,6 @@
     #define HEADLIGHT
 #elif BOARD == L_SIDE_LIGHT
     #define LEFT_BLINK
-    #define BPS_FAULT
 #elif BOARD == R_SIDE_LIGHT
     #define RIGHT_BLINK
     #define BRAKELIGHT
@@ -53,8 +58,8 @@
     #define BLINK1 true
 #endif
 
-#ifdef BPS_FAULT
-    #define LED_ID_2 0x100
+#if BOARD == L_SIDE_LIGHT
+    #define LED_ID_2 0x505
     #define BIT_OFF2 0
     #define BLINK2 true
 #endif

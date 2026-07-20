@@ -46,6 +46,7 @@ void LightingCAN::readHandler(CAN_message_t msg) {
     if (msg.id == LED_ID_1) {
         blinkRequest = (data >> BIT_OFF1) & 1;
         applyBlinkOutput();
+        return;
     }
 #endif
 
@@ -56,13 +57,12 @@ void LightingCAN::readHandler(CAN_message_t msg) {
         #endif
         setLED(0);
     }
-    if (msg.id == LED_ID_2) {
+    #ifdef LED_ID_2
+    else if (msg.id == LED_ID_2) {
         leds[1].on = (data >> BIT_OFF2) & 1;
-        #ifdef BPS_FAULT
-            leds[1].on = msg.buf[0] != 0 || msg.buf[2] != 0 || msg.buf[4] != 0 || msg.buf[5] != 0;
-        #endif
         setLED(1);
     }
+    #endif
 }
 
 void setLED(uint8_t i) {
