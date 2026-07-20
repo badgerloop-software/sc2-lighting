@@ -42,7 +42,9 @@ void LightingCAN::readHandler(CAN_message_t msg) {
 #endif
 
 #if defined(BPS_FAULT)
+    Serial.printf("BPS Fault macro on\n");
     if (msg.id == LED_ID_2) {
+        Serial.printf("Here\n");
         leds[1].on = (data >> BIT_OFF2) & 1;
         setLED(1);
     }

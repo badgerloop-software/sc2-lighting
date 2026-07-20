@@ -12,7 +12,7 @@
 #define R_REAR_PLATE 6
 #define R_REAR_REVERSE 7
 
-#define BOARD 7
+#define BOARD 3
 
 #define BLINK_DELAY 400
 
