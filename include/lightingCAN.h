@@ -12,7 +12,7 @@
 #define R_REAR_PLATE 6
 #define R_REAR_REVERSE 7
 
-#define BOARD 7
+#define BOARD 3
 
 #define BLINK_DELAY 400
 
@@ -52,7 +52,7 @@
 #endif
 
 #ifdef BPS_FAULT
-    #define LED_ID_2 0x103
+    #define LED_ID_2 0x505
     #define BIT_OFF2 0
     #define BLINK2 true
 #endif
