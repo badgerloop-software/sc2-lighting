@@ -32,6 +32,7 @@
     #define HEADLIGHT
 #elif BOARD == L_SIDE_LIGHT
     #define LEFT_BLINK
+    #define BPS_FAULT
 #elif BOARD == R_SIDE_LIGHT
     #define RIGHT_BLINK
     #define BRAKELIGHT
@@ -58,7 +59,7 @@
     #define BLINK1 true
 #endif
 
-#if BOARD == L_SIDE_LIGHT
+#ifdef BPS_FAULT
     #define LED_ID_2 0x505
     #define BIT_OFF2 0
     #define BLINK2 true
