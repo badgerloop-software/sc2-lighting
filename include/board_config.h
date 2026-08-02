@@ -1,8 +1,6 @@
 #ifndef __BOARD_CONFIG_H__
 #define __BOARD_CONFIG_H__
 
-// board constants so they are easy to change
-
 // ------------- BOARD TYPE -------------
 #define L_FRONT_LIGHT 1
 #define R_FRONT_LIGHT 2
