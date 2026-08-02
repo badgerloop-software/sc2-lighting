@@ -20,7 +20,7 @@ CanLighting::CanLighting(CAN_TypeDef* canPort, CAN_PINS pins, int frequency)
 
 bool CanLighting::send() {
     uint8_t heartbeat = 12;
-    return sendMessage(SC2_CAN_LIGHTING_HEARTBEAT_ID, (void*)&heartbeat, sizeof(uint8_t));
+    return sendMessage(CAN_LIGHTING_HEARTBEAT, (void*)&heartbeat, sizeof(uint8_t));
 }
 
 void CanLighting::updateOutputs() {
@@ -35,35 +35,35 @@ void CanLighting::readHandler(CAN_message_t msg) {
     uint8_t data = msg.buf[0];
 
 #if defined(LEFT_BLINK) || defined(RIGHT_BLINK)
-    if (msg.id == SC2_CAN_STEERING_DIGITAL_ID) {
+    if (msg.id == CAN_STEERING_DIGITAL) {
         leds[0].on = (data >> BIT_OFF1) & 1;
         setLED(0);
     }
 #endif
 
 #ifdef REVERSE
-    if (msg.id == SC2_CAN_PDC_DIGITAL_ID) {
+    if (msg.id == CAN_PDC_DIGITAL) {
         leds[0].on = (data >> BIT_OFF1) & 1;
         setLED(0);
     }
 #endif
 
 #ifdef BPS_FAULT
-    if (msg.id == SC2_CAN_PT_FAULT_STATUS_ID) {
+    if (msg.id == CAN_PT_FAULT_STATUS) {
         leds[1].on = (data >> BIT_OFF2) & 1;
         setLED(1);
     }
 #endif
 
 #ifdef BRAKELIGHT
-    if (msg.id == SC2_CAN_PDC_DIGITAL_ID) {
+    if (msg.id == CAN_PDC_DIGITAL) {
         leds[1].on = (data >> BIT_OFF2) & 1;
         setLED(1);
     }
 #endif
 
 #ifdef HEADLIGHT
-    if (msg.id == SC2_CAN_STEERING_DIGITAL_ID) {
+    if (msg.id == CAN_STEERING_DIGITAL) {
         leds[1].on = (data >> BIT_OFF2) & 1;
         setLED(1);
     }

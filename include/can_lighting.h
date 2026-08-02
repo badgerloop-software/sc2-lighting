@@ -19,7 +19,7 @@ extern volatile LED leds[2];
 
 // ------------- CLASS -------------
 
-// IDs / DLCs from embedded-pio/can_ids.h (SC2_CAN_*)
+// IDs / DLCs from embedded-pio/can_ids.h (CAN_*)
 
 class CanLighting : public CANManager {
    public:
