@@ -19,6 +19,8 @@ extern volatile LED leds[2];
 
 // ------------- CLASS -------------
 
+// IDs / DLCs from embedded-pio/can_ids.h (SC2_CAN_*)
+
 class CanLighting : public CANManager {
    public:
     CanLighting(CAN_TypeDef* canPort, CAN_PINS pins, int frequency = DEFAULT_CAN_FREQ);
