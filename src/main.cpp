@@ -1,18 +1,28 @@
 #include <Arduino.h>
-#include "STM32_CAN.h"
-#include "lightingCAN.h"
 
-LightingCAN Can1(CAN1, DEF);
+#include "board_config.h"
+#include "can_lighting.h"
+#include "debug.h"
+
+// ------------- LOCAL -------------
+
+static CanLighting canBus(CAN1, DEF);
+
+// ------------- PUBLIC FUNCTIONS -------------
 
 void setup() {
-  pinMode(PA0, OUTPUT);
-  pinMode(PA1, OUTPUT);
+    pinMode(LED_PIN_1, OUTPUT);
+    pinMode(LED_PIN_2, OUTPUT);
 #ifdef PLATE_ALWAYS_ON
-  digitalWrite(PA1, HIGH);
+    digitalWrite(LED_PIN_2, HIGH);
 #endif
+
+    debugInit();
 }
 
 void loop() {
-  Can1.runQueue(1);
-  Can1.updateOutputs();
+    debugUpdate();
+
+    canBus.runQueue(1);
+    canBus.updateOutputs();
 }
