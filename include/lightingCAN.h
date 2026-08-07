@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include "canmanager.h"
 
+// Set BOARD define to the PCB this firmware builds for
 #define L_FRONT_LIGHT 1
 #define R_FRONT_LIGHT 2
 #define L_SIDE_LIGHT 3
@@ -16,6 +17,7 @@
 
 #define BLINK_DELAY 400
 
+// First define = led0, second define = led1
 #if BOARD == L_FRONT_LIGHT
     #define LEFT_BLINK
     #define HEADLIGHT
@@ -39,6 +41,7 @@
     #define BRAKELIGHT
 #endif
 
+// Role macros set CAN ID, bit offset, and blink flag for leds[0] / leds[1]
 #ifdef LEFT_BLINK
     #define LED_ID_1 0x300
     #define BIT_OFF1 1
@@ -52,7 +55,7 @@
 #endif
 
 #ifdef BPS_FAULT
-    #define LED_ID_2 0x505
+    #define LED_ID_2 0x001
     #define BIT_OFF2 0
     #define BLINK2 true
 #endif
